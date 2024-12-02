@@ -26,22 +26,22 @@ let loaderInterval = setInterval(() => {
     }
 }, 1000);
 
-const HTML_CONTENT = (avph, avpp) => `
+const HTML_CONTENT = (averagePerHour, averagePerProject) => `
 <div id="hs-ext-features" class="rounded-lg bg-card text-card-foreground shadow-sm bg-blend-color-burn flex flex-col sm:gap-2 sm:flex-row items-start sm:items-center p-4 hover:bg-gray-100 transition-colors duration-200" style="background-size: 10rem 100%;background-repeat: repeat-x;background-color: rgba(255, 255, 255, 0.94);">
     <p id="hs-ext-title">HighSeas Doubloons Extension</p>
     <div class="flex flex-wrap items-start gap-3 text-sm items-center">
         <span class="mr-2 text-xl font-semibold">Average: </span>
         <span class="inline-flex items-center gap-1 rounded-full px-2 border text-sm leading-none text-green-600 bg-green-50 border-green-500/10 " style="vertical-align: middle;">
             <img alt="doubloons" loading="lazy" width="16" height="20" decoding="async" data-nimg="1" src="/_next/static/media/doubloon.fd63888b.svg" style="color: transparent;">
-            <span class="inline-block py-1">${avph?.toFixed(2)} / hour</span>
+            <span class="inline-block py-1">${averagePerHour?.toFixed(2)} / hour</span>
         </span>
         <span class="inline-flex items-center gap-1 rounded-full px-2 border text-sm leading-none text-green-600 bg-green-50 border-green-500/10 " style="vertical-align: middle;">
             <img alt="doubloons" loading="lazy" width="16" height="20" decoding="async" data-nimg="1" src="/_next/static/media/doubloon.fd63888b.svg" style="color: transparent;">
-            <span class="inline-block py-1">${avpp?.toFixed(2)} / project</span>
+            <span class="inline-block py-1">${averagePerProject?.toFixed(2)} / project</span>
         </span>
         <span class="inline-flex items-center gap-1 rounded-full px-2 border text-sm leading-none text-green-600 bg-green-50 border-green-500/10 " style="vertical-align: middle;">
             ${SVG_VOTES_ICON}
-            <span class="inline-block py-1">~${pointsToVotes(avph)} votes / project</span>
+            <span class="inline-block py-1">~${pointsToVotes(averagePerHour)} votes / project</span>
         </span>
     </div>
 </div>
@@ -74,27 +74,28 @@ function getAverages() {
         Number([...ship.querySelectorAll("span").values()]?.filter(sp => sp?.textContent?.endsWith("doubloons"))?.[0]?.textContent?.replace(" doubloons", "") ?? 0),
         Number([...ship.querySelectorAll("span").values()]?.filter(sp => sp?.textContent?.endsWith("hrs"))?.[0]?.textContent?.replace(" hrs", "") ?? 0)
     ]);
-    let dubloons = 0;
-    let hours = 0;
-    let shipCount = 0;
+    let dubloons = 0.0;
+    let hours = 0.0;
+    let shipCount = 0.0;
     for (let i = 0; i < dhData.length; i++) {
         //add dubloons
-        dubloons += dhData[0];
+        dubloons += dhData[i][0];
         //add hours
-        hours += dhData[1];
+        hours += dhData[i][1];
         shipCount++;
     }
-    let dubloonsPerHour = dubloons / hours ?? 0;
-    let dubloonsPerShip = dubloons / ships ?? 0;
+    const dubloonsPerHour = (dubloons / hours) ?? 0;
+    const dubloonsPerShip = (dubloons / shipCount) ?? 0;
 
     return [dubloonsPerHour, dubloonsPerShip];
 }
 
 const HTML_SCRIPT = () => {
-    let [avph, avpp] = getAverages();
+    //sets both variables seperatly at once
+    let [averagePerHour, averagePerProject] = getAverages();
 
     if (!document.getElementById("hs-ext-features")) {
-        shippedShipsHeader.insertAdjacentHTML("afterend", HTML_CONTENT(avph, avpp));
+        shippedShipsHeader.insertAdjacentHTML("afterend", HTML_CONTENT(averagePerHour, averagePerProject));
     }
 
     const ships = document.querySelectorAll('[id^="shipped-ship-"]');
@@ -111,7 +112,7 @@ const HTML_SCRIPT = () => {
                 <span class="inline-flex items-center gap-1 rounded-full px-2 border text-sm leading-none text-green-600 bg-green-50 border-green-500/10 " style="vertical-align: middle;">
                     <span class="inline-block py-1 text-gray-600">Expected:</span>
                     <img alt="doubloons" loading="lazy" width="16" height="20" decoding="async" data-nimg="1" src="/_next/static/media/doubloon.fd63888b.svg" style="color: transparent;">
-                    <span class="inline-block py-1">${Math.round(hrsNum * avph)} doubloons</span>
+                    <span class="inline-block py-1">${Math.round(hrsNum * averagePerHour)} doubloons</span>
                 </span>
                 `);
                 return;

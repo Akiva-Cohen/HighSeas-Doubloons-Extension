@@ -1,9 +1,7 @@
-console.hs = (...args) => console.log("HighSeas Doubloons Extension:", ...args);
 
 const isThisShipyard = () => window.location.href.includes("shipyard");
 const pointsToVotes = (points) => Math.round(((points - 0.5) * 10) / 24.5);
 
-console.hs("Loading...");
 /**@type {HTMLHeadingElement} */
 let shippedShipsHeader = null;
 
@@ -99,6 +97,7 @@ const HTML_SCRIPT = () => {
     }
 
     const ships = document.querySelectorAll('[id^="shipped-ship-"]');
+    //loops through ships and changes them
     ships.forEach(ship => {
         try {
             if (ship?.querySelector('.flex-grow > div')?.children?.length > ([...ship.querySelectorAll("span").values()]?.filter(sp => sp?.textContent?.endsWith("update"))?.[0] ? 3 : 2)) return;
@@ -139,12 +138,10 @@ const HTML_SCRIPT = () => {
             votesSpanElement.textContent = `~${pointsToVotes(doubloonsNum / hrsNum)} Votes`;
             inHrsElement.insertAdjacentElement("beforeBegin", votesElement);
         } catch (err) {
-            console.hs("Error when loading!");
         }
     });
 };
 
 function runCode() {
     HTML_SCRIPT();
-    console.hs("Loaded!");
 }

@@ -76,13 +76,13 @@ function getAverages() {
     ]);
     let dubloons = 0;
     let hours = 0;
-    let ships = 0;
+    let shipCount = 0;
     for (let i = 0; i < dhData.length; i++) {
         //add dubloons
         dubloons += dhData[0];
         //add hours
         hours += dhData[1];
-        ships++;
+        shipCount++;
     }
     let dubloonsPerHour = dubloons / hours ?? 0;
     let dubloonsPerShip = dubloons / ships ?? 0;

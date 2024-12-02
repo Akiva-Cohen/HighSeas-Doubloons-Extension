@@ -1,5 +1,5 @@
 //create button
-const check = document.getElementById("onOff");
+let check = document.getElementById("onOff");
 //set switch at open
 new Promise(() => {
     chrome.storage.local.get(["on"], function (output) {

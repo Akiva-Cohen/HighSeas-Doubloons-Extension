@@ -1,6 +1,6 @@
 //checks if button checked
 new Promise((resolve) => {
-    chrome.local.storage.get(["on"], function (output) {
+    chrome.storage.local.get(["on"], function (output) {
         x = output.on;
         if (x || x === undefined) {
             runCode();

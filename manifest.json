@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "HighSeas Doubloons",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "A simple extension that adds some new features to the HighSeas-Shipyard page",
     "content_scripts": [
         {
@@ -25,6 +25,6 @@
         "48": "./icon-x48.png",
         "128": "./icon-x48.png"
       },
-      "default_title": "HighSeas Doubloons Plus"
+      "default_title": "HighSeas Doubloons Plus Branch"
     }
 }

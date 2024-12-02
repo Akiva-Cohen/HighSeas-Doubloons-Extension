@@ -68,14 +68,26 @@ const SVG_VOTES_ICON = `<svg fill-rule="evenodd" clip-rule="evenodd" stroke-line
 
 function getAverages() {
     let ships = [...document.querySelectorAll('[id^="shipped-ship-"]:has(button)').values()];
+    //makes array dhData
+    //each item of the array is one ship, and coresponds to [dubloons, hours]
     const dhData = ships.map(ship => [
         Number([...ship.querySelectorAll("span").values()]?.filter(sp => sp?.textContent?.endsWith("doubloons"))?.[0]?.textContent?.replace(" doubloons", "") ?? 0),
         Number([...ship.querySelectorAll("span").values()]?.filter(sp => sp?.textContent?.endsWith("hrs"))?.[0]?.textContent?.replace(" hrs", "") ?? 0)
     ]);
-    return [
-        (dhData.map(([ph, pp]) => ph / pp).reduce((a, b) => a + b, 0) / ships.length) ?? 0,
-        (dhData.reduce((a, b) => a + b[0], 0) / ships.length) ?? 0
-    ]
+    let dubloons = 0;
+    let hours = 0;
+    let ships = 0;
+    for (let i = 0; i < dhData.length; i++) {
+        //add dubloons
+        dubloons += dhData[0];
+        //add hours
+        hours += dhData[1];
+        ships++;
+    }
+    let dubloonsPerHour = dubloons / hours ?? 0;
+    let dubloonsPerShip = dubloons / ships ?? 0;
+
+    return [dubloonsPerHour, dubloonsPerShip];
 }
 
 const HTML_SCRIPT = () => {

@@ -15,8 +15,8 @@ new Promise(() => {
 //listen for switch flick
 check.addEventListener("change", function() {
     if (check.checked) {
-        chrome.local.storage.set({"on":true});
+        chrome.storage.local.set({"on":true});
     } else {
-        chrome.local.storage.set({"on":false});
+        chrome.storage.local.set({"on":false});
     }
 });

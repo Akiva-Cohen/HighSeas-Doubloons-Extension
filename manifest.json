@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "HighSeas Doubloons",
-    "version": "1.5.1",
+    "version": "1.6.9",
     "description": "A simple extension that adds some new features to the HighSeas-Shipyard page",
     "content_scripts": [
         {
@@ -38,6 +38,18 @@
       "default_popup": "popup.html"
     },
     "permissions" : [
-      "storage"
-    ]
+      "storage",
+      "scripting",
+      "tabs"
+    ],
+    "host_permissions" : [
+      "https://highseas.hackclub.com/wonderdome",
+      "https://high-seas.hackclub.dev/wonderdome"
+    ],
+    "web_accessible_resources" : [{
+      "resources" : [
+        "Stop.js"
+      ],
+      "matches" : ["<all_urls>"]
+    }]
 }

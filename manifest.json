@@ -6,12 +6,21 @@
     "content_scripts": [
         {
             "matches": [
-                "https://highseas.hackclub.com/*",
-                "https://high-seas.hackclub.dev/*"
+                "https://highseas.hackclub.com/shipyard",
+                "https://high-seas.hackclub.dev/shipyard"
             ],
             "js": [
                 "content.js"
             ]
+        },
+        {
+          "matches" : [
+            "https://high-seas.hackclub.dev/wonderdome",
+            "https://highseas.hackclub.com/wonderdome"
+          ],
+          "js": [
+            "Wonder.js"
+          ]
         }
     ],
     "icons": {
